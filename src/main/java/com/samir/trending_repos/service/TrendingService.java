@@ -20,13 +20,10 @@ import static com.samir.trending_repos.constant.Constant.*;
 @Service
 public class TrendingService {
 
-    //    Map<String, Integer> languageMap;
     Map<String, Language> languageListMap;
 
     public Map<String, Language> getTrendingRepos() throws IOException {
-//        languageMap = new HashMap<>();
         languageListMap = new HashMap<>();
-
         HttpURLConnection connection = getConnection();
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(connection.getInputStream()));
@@ -40,11 +37,11 @@ public class TrendingService {
 
     private HttpURLConnection getConnection() throws IOException {
         URL url = new URL(Constant.getUrl());
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Content-Type", "application/json");
-        con.setConnectTimeout(1000);
-        return con;
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setConnectTimeout(1000);
+        return connection;
     }
 
     private void addToMap(String jsonData) {
@@ -80,13 +77,4 @@ public class TrendingService {
             return null;
         return itemRow.get(LANGUAGE_PARAMETER).getAsString();
     }
-
-//    private Map<String, Integer> sortMap() {
-//        Map<String, Integer> sortedMap = new LinkedHashMap<>();
-//        languageMap.entrySet().stream()
-//                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-//                .forEachOrdered(map -> sortedMap.put(map.getKey(), map.getValue()));
-//        return sortedMap;
-//    }
-
 }
